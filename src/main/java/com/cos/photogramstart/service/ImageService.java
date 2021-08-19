@@ -6,7 +6,10 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
@@ -20,6 +23,32 @@ import lombok.RequiredArgsConstructor;
 public class ImageService {
 	
 	private final ImageRepository imageRepository;
+	
+	@Transactional(readOnly = true) 
+	public Page<Image> imageStory(int principalId, Pageable pageable){
+		Page<Image> images = imageRepository.mStory(principalId, pageable);
+		
+		//images에 좋아요 상태 담기
+		images.forEach((image)->{
+			
+			image.setLikeCount(image.getLikes().size());
+			
+			image.getLikes().forEach((like)->{
+				if(like.getUser().getId()==principalId) {
+					
+					image.setLikeState(true);
+				}
+			});
+		});
+		
+		return images;
+	}
+	
+//	@Transactional(readOnly = true) 
+//	public List<Image> imageStory(int principalId, Pageable pageable){
+//		List<Image> images = imageRepository.mStory(principalId, pageable);
+//		return images;
+//	}
 	
 	@Value("${file.path}")
 	private String uploadFolder;
