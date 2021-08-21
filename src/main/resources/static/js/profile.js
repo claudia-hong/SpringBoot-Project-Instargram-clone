@@ -58,7 +58,7 @@ function subscribeInfoModalOpen(pageUserId) {
 }
 
 function getSubscribeModalItem(u) {
-	let item=`<div class="subscribe__item" id="subscribeModalItem-${u.id}">
+	let item = `<div class="subscribe__item" id="subscribeModalItem-${u.id}">
 	<div class="subscribe__img">
 		<img src="/upload/${u.profileImageUrl}" onerror="this.src='/images/person.jpeg'" />
 	</div>
@@ -66,22 +66,31 @@ function getSubscribeModalItem(u) {
 		<h2>${u.username}</h2>
 	</div>
 	<div class="subscribe__btn">`
-	
-	if(!u.equalUserState){
-		if(u.subscribeState){
-		item+=`<button class="cta blue" onclick="toggleSubscribe(${u.id},this)">구독취소</button>	`;
-		}else{
-		item+=`<button class="cta" onclick="toggleSubscribe(${u.id},this)">구독하기</button>`;	
+
+	if (!u.equalUserState) {
+		if (u.subscribeState) {
+			item += `<button class="cta blue" onclick="toggleSubscribe(${u.id},this)">구독취소</button>	`;
+		} else {
+			item += `<button class="cta" onclick="toggleSubscribe(${u.id},this)">구독하기</button>`;
 		}
 	}
-		item+=`
+	item += `
 	</div>
 </div>`;
 	return item;
 }
 
 // (3) 유저 프로파일 사진 변경 (완)
-function profileImageUpload() {
+function profileImageUpload(pageUserId, principalId) {
+
+	//console.log("pageUserId",pageUserId);
+	//console.log("principalId",principalId);
+
+	if (pageUserId != principalId) {
+		alert("본인의 프로필 사진만 수정이 가능합니다.");
+		return;
+	}
+
 	$("#userProfileImageInput").click();
 
 	$("#userProfileImageInput").on("change", (e) => {
@@ -92,11 +101,29 @@ function profileImageUpload() {
 			return;
 		}
 
-		// 사진 전송 성공시 이미지 변경
-		let reader = new FileReader();
-		reader.onload = (e) => {
-			$("#userProfileImage").attr("src", e.target.result);
-		}
+		//서버에 이미지 전송
+		let profileImageForm = $("#userProfileImageForm")[0];
+		console.log(profileImageForm);
+
+		let formData = new FormData(profileImageForm);
+
+		$.ajax({
+			type: "put",
+			url: `/api/user/${principalId}/profileImageUrl`,
+			data: formData,
+			contentType: false,
+			processData: false,
+			enctype: "multipart/form-data",
+			dataType: "json"
+		}).done(res => {
+			// 사진 전송 성공시 이미지 변경
+			let reader = new FileReader();
+			reader.onload = (e) => {
+				$("#userProfileImage").attr("src", e.target.result);
+			}
+		}).fail(error => {
+			console.log("오류", error);
+		});
 		reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
 	});
 }

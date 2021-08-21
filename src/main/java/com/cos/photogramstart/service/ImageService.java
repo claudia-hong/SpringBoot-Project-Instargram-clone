@@ -3,6 +3,7 @@ package com.cos.photogramstart.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +25,12 @@ public class ImageService {
 	
 	private final ImageRepository imageRepository;
 	
+	@Transactional(readOnly = true)
+	public List<Image> popularImage(){
+		
+		return imageRepository.mPopular();
+	}
+	
 	@Transactional(readOnly = true) 
 	public Page<Image> imageStory(int principalId, Pageable pageable){
 		Page<Image> images = imageRepository.mStory(principalId, pageable);
@@ -43,12 +50,6 @@ public class ImageService {
 		
 		return images;
 	}
-	
-//	@Transactional(readOnly = true) 
-//	public List<Image> imageStory(int principalId, Pageable pageable){
-//		List<Image> images = imageRepository.mStory(principalId, pageable);
-//		return images;
-//	}
 	
 	@Value("${file.path}")
 	private String uploadFolder;
