@@ -44,25 +44,15 @@ public class AuthController {
 	@PostMapping("/auth/signup")
 	public String siginup(@Valid SignupDto signupdto, BindingResult bindingResult) {
 		
-		if (bindingResult.hasErrors()) {
-			
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationException("유효성 검사 실패", errorMap);
-		}else {
 			//log.info(signupdto.toString()); //4개의 데이터를 받아오는지 확인
 			User user = signupdto.toEntity();
 			//log.info(user.toString());// 투엔티티에서 넘어오는지 확인
-			User userEntity = authService.SignupUser(user);
-			 System.out.println(userEntity);	//확인
+			 authService.SignupUser(user);
+			 //System.out.println(userEntity);	//확인
+			 
+			 //로그를 남기는 후처리하기
 			return "/auth/signin";
-			
-		} 
 	}
-
 	
 	
 }

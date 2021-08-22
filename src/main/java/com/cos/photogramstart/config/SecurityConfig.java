@@ -7,9 +7,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.cos.photogramstart.config.oauth.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @EnableWebSecurity //해당 파일로 시큐리티를 활성화
 @Configuration  //Ioc      
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	private final OAuth2DetailsService oAuth2DetailsService;
 	
 	@Bean//빈등록
 	public BCryptPasswordEncoder encode() {
@@ -28,9 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		   .formLogin()
 		   .loginPage("/auth/signin") //GET
 		   .loginProcessingUrl("/auth/signin") //POST
-		   .defaultSuccessUrl("/");
+		   .defaultSuccessUrl("/")
+		   .and()
+		   .oauth2Login()
+		   .userInfoEndpoint()
+		   .userService(oAuth2DetailsService);
 		
 	}
-	
+
 	
 }

@@ -47,7 +47,7 @@ public class ImageController {
 		
 		if (imageUploadDto.getFile().isEmpty()) {
 			throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
-			
+			//이 부분은 Vaild가 아니므로 AOP하지 않는다.
 		}
 		
 		imageService.imagePosting(imageUploadDto, principalDetails);
