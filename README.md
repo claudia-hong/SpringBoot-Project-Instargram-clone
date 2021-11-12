@@ -1,93 +1,77 @@
-# 포토그램 - 인스타그램 클론 코딩
+# :pushpin: SNS 클론 코딩
+>인스타그램 클론 
+>https://go-quality.dev  
+
+</br>
+
+## 1. 제작 기간 & 참여 인원
+- 2019년 2월 18일 ~ 4월 5일
+- 개인 프로젝트
+
+</br>
+
+## 2. 사용 기술
+#### `Back-end`
+  - Java 8
+  - Spring Boot 2.3
+  - Gradle
+  - Spring Data JPA
+  - QueryDSL
+  - H2
+  - MySQL 5.7
+  - Spring Security
+  - Jsoup
+#### `Front-end`
+  - Vue.js 3.0
+  - Element UI
+
+</br>
+
+## 3. ERD 설계
+![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/final_erd.png)
 
 
-### 의존성
+## 4. 핵심 기능
+이 서비스의 핵심 기능은 컨텐츠 등록 기능입니다.  
+사용자는 단지 컨텐츠의 카테고리를 선택하고, URL만 입력하면 끝입니다.  
+이 단순한 기능의 흐름을 보면, 서비스가 어떻게 동작하는지 알 수 있습니다.  
 
-- Sring Boot DevTools
-- Lombok
-- Spring Data JPA
-- MariaDB Driver
-- Spring Security
-- Spring Web
-- oauth2-client
+<details>
+<summary><b>핵심 기능 설명 펼치기</b></summary>
+<div markdown="1">
 
-```xml
-<!-- 시큐리티 태그 라이브러리 -->
-<dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-taglibs</artifactId>
-</dependency>
+### 4.1. 전체 흐름
 
-<!-- JSP 템플릿 엔진 -->
-<dependency>
-	<groupId>org.apache.tomcat</groupId>
-	<artifactId>tomcat-jasper</artifactId>
-	<version>9.0.43</version>
-</dependency>
 
-<!-- JSTL -->
-<dependency>
-	<groupId>javax.servlet</groupId>
-	<artifactId>jstl</artifactId>
-</dependency>
-```
+### 4.2. 사용자 요청
 
-### 데이터베이스
+### 4.3. Controller
 
-```sql
-create user 'cos'@'%' identified by 'cos1234';
-GRANT ALL PRIVILEGES ON *.* TO 'cos'@'%';
-create database photogram;
-```
 
-### yml 설정
 
-```yml
-server:
-  port: 8080
-  servlet:
-    context-path: /
-    encoding:
-      charset: utf-8
-      enabled: true
-    
-spring:
-  mvc:
-    view:
-      prefix: /WEB-INF/views/
-      suffix: .jsp
-      
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/costa?serverTimezone=Asia/Seoul
-    username: costa
-    password: costa1234
-    
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: true
-      
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 2MB
+### 4.4. Service
 
-  security:
-    user:
-      name: test
-      password: 1234   
 
-file:
-  path: C:/src/springbootwork-sts/upload/
-```
 
-### 태그라이브러리
+### 4.5. Repository
 
-```jsp
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-```
+![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_repo.png)
+
+- **컨텐츠 저장** :pushpin: [코드 확인]()
+  - URL 유효성 체크와 이미지, 제목 파싱이 끝난 컨텐츠는 DB에 저장합니다.
+  - 저장된 컨텐츠는 다시 Repository - Service - Controller를 거쳐 화면단에 송출됩니다.
+
+</div>
+</details>
+
+</br>
+
+## 5. 핵심 트러블 슈팅
+### 5.1. 컨텐츠 필터와 페이징 처리 문제
+
+
+## 6. 그 외 트러블 슈팅
+
+
+## 6. 회고 / 느낀점
+>프로젝트 개발 회고 글: 
