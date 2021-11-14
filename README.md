@@ -1,6 +1,6 @@
 # :pushpin: SNS 클론 코딩
 >인스타그램 클론 
->https://go-quality.dev  
+>  
 
 </br>
 
@@ -21,8 +21,7 @@
   - Spring Security
   - 
 #### `Front-end`
-  - Vue.js 3.0
-  - Element UI
+  - JSP
 
 </br>
 
