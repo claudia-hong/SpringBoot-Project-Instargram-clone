@@ -35,23 +35,18 @@
 ### 4.1. 전체 흐름
 ![](https://user-images.githubusercontent.com/62270305/145223241-79f3b5af-d5ce-48d9-a9ce-e407116e58f5.png)
 
-### 4.2. 사용자 요청
+### 4.2. 로그인 및 회원가입
 
-### 4.3. Controller
-
-
-
-### 4.4. Service
+### 4.3. 프로필 페이지
 
 
+### 4.4. 인기게시글 페이지
 
-### 4.5. Repository
 
-![](https://zuminternet.github.io/images/portal/post/2019-04-22-ZUM-Pilot-integer/flow_repo.png)
 
-- **컨텐츠 저장** :pushpin: [코드 확인]()
-  - URL 유효성 체크와 이미지, 제목 파싱이 끝난 컨텐츠는 DB에 저장합니다.
-  - 저장된 컨텐츠는 다시 Repository - Service - Controller를 거쳐 화면단에 송출됩니다.
+### 4.5 스토리 페이지
+
+
 
 </div>
 </details>
