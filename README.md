@@ -37,6 +37,8 @@
 
 ### 4.2. 로그인 및 회원가입
 
+![](https://user-images.githubusercontent.com/62270305/157661585-3854eef7-651f-4f4f-ba46-faf97d9a9974.png)
+
 ### 4.3. 프로필 페이지
 
 
